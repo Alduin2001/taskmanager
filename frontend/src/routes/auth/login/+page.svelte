@@ -4,6 +4,7 @@
     import { createForm } from "svelte-forms-lib";
 	import type { loginUserDto } from "$lib/interfaces/user";
     import { loginUserSchema } from "$lib/validation/user";
+	import { loginUser } from "$lib/store/UserStore";
     const {form,handleChange,handleSubmit,state,errors} = createForm<loginUserDto>({
         initialValues:{
             email:"",
@@ -11,9 +12,11 @@
         },
         validationSchema:loginUserSchema,
         onSubmit:async (data:loginUserDto)=>{
-            console.log(data);
+            const response = await loginUser(data);
+            if(response){
+                goto('/profile');
+            }
         }
-        
     });
 </script>
 

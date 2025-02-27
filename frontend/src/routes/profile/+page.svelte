@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { Container, ListGroup, ListGroupItem } from "@sveltestrap/sveltestrap";
+    import { isAuth } from "$lib/store/UserStore";
+	import { get } from "svelte/store";
 
-
+    console.log(get(isAuth));
 </script>
 
 <Container>

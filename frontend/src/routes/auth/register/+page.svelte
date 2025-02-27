@@ -4,7 +4,7 @@
 	import { createUserSchema } from "$lib/validation/user";
 	import { Button, Col, Container, Form, FormGroup, FormText, Input, InputGroup, InputGroupText, Row } from "@sveltestrap/sveltestrap";
 	import {createForm} from 'svelte-forms-lib';
-	import { userStore } from "$lib/store/UserStore";
+	import { createUser } from "$lib/store/UserStore";
 
 	const {form,handleSubmit,errors,handleChange,state} = createForm<createUserDto>({
 		initialValues:{
@@ -16,7 +16,7 @@
 		validationSchema:createUserSchema,
 
 		onSubmit:async data=>{
-			const response = await userStore.createUser(data);
+			const response = await createUser(data);
 			if(response){
 				goto('/auth/login');
 			}
