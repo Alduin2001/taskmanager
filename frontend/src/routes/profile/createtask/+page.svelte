@@ -1,12 +1,16 @@
 <script lang="ts">
-	import { Container, Form } from "@sveltestrap/sveltestrap";
+	import { Col, Container, Form, Row } from "@sveltestrap/sveltestrap";
 
 
 </script>
 
 <Container>
     <h1>Создание задачи</h1>
-    <Form>
-        
-    </Form>
+    <Row>
+        <Col md={3}>
+            <Form>
+                
+            </Form>
+        </Col>
+    </Row>
 </Container>
