@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, Col, Container, Form, Row } from "@sveltestrap/sveltestrap";
-
+    import {addToLocal, createTask, createTasks, removeAll} from '$lib/store/TaskStore';
+	import TaskFormItem from "$lib/components/TaskFormItem.svelte";
 
 </script>
 
@@ -14,20 +15,22 @@
             <Form>
                 <Row>
                     <Col>
-                        <Button color="primary" class="w-100">Ещё</Button>
+                        <Button color="primary" class="w-100" onclick={addToLocal}>Ещё</Button>
                     </Col>
                     <Col>
-                        <Button color="success" class="w-100">Сохранить</Button>
+                        <Button color="success" class="w-100" onclick={createTask}>Сохранить</Button>
                     </Col>
                 </Row>
                 <Row class="mt-2">
-                    <Col><Button color="danger" class="w-100">Удалить все</Button></Col>
+                    <Col><Button color="danger" class="w-100" onclick={removeAll}>Удалить все</Button></Col>
                 </Row>
             </Form>
         </Col>
         <Col>
-            <h1>Вывод всех задач</h1>
-            
+            <h1>Вывод формы добавления задач</h1>
+            {#each $createTasks as prop}
+                <TaskFormItem {...prop} />
+            {/each}
         </Col>
     </Row>
 </Container>

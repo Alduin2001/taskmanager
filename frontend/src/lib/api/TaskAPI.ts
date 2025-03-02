@@ -2,7 +2,7 @@ import { apiClient } from "$lib/config/apiClient";
 import type { createTaskDto } from "$lib/interfaces/task";
 
 export default class TaskAPI{
-    static async createTask(data:createTaskDto):Promise<any>{
+    static async create(data:createTaskDto[]):Promise<any>{
         try {
             const response = await apiClient.post('/task',data);
             return response;
@@ -10,7 +10,7 @@ export default class TaskAPI{
             return error;
         }
     }
-    static async getTasks():Promise<any>{
+    static async get():Promise<any>{
         try {
             const response = await apiClient.get('/task');
             return response;
@@ -18,6 +18,6 @@ export default class TaskAPI{
             return error;
         }
     }
-    
+
 
 }

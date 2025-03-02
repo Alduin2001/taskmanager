@@ -1,19 +1,26 @@
 <script lang="ts">
-	import { Button, Col, FormGroup, FormText, Input, Row } from "@sveltestrap/sveltestrap";
-    import { Form } from "svelte-forms-lib";
+	import { Button, Col, FormGroup, FormText, Input, Row, Form } from "@sveltestrap/sveltestrap";
     import { createForm } from "svelte-forms-lib";
     import type { createTaskDto } from "$lib/interfaces/task";
-
+	import { removeFromLocal, updateLocal } from "$lib/store/TaskStore";
+    export let id:number;
+    export let name:string;
+    export let description:string;
     const {form,handleChange,handleSubmit,errors} = createForm<createTaskDto>({
         initialValues:{
-            name:"",
-            description:""
+            id:id,
+            name:name,
+            description:description
         },
         onSubmit:async (data:createTaskDto)=>{
             console.log(data);
+            updateLocal(id,data);
         }
     });
 
+const removeTask = ()=>{
+    removeFromLocal(id);
+}
 </script>
 
 <Form onsubmit={handleSubmit}>
@@ -27,10 +34,10 @@
     </FormGroup>
     <Row class="mt-2">
         <Col>
-            <Button class="w-100" color="success">Добавить</Button>
+            <Button class="w-100" color="success">Подтвердить</Button>
         </Col>
         <Col>
-            <Button class="w-100" color="danger">Удалить</Button>
+            <Button class="w-100" onclick={removeTask} color="danger">Удалить</Button>
         </Col>
     </Row>
 </Form>

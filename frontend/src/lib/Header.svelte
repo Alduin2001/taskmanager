@@ -29,7 +29,7 @@ const logout = async ()=>{
                 <DropdownMenu end>
                     <DropdownItem href="/">Главная</DropdownItem>
                     <DropdownItem href="/about">О нас</DropdownItem>
-                    <DropdownItem href="/profile/createtask">О нас</DropdownItem>
+                    <DropdownItem href="/profile/createtask">Создать задачу</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
             {#if !$isAuth}
