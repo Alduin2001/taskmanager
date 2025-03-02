@@ -11,14 +11,12 @@ export class TaskService {
   ){}
   async create(createTaskDto: CreateTaskDto, user_id:number) {
     try {
-      const {name,description} = createTaskDto;
-      const task = await this.prisma.task.create({data:{
-        name,
-        description,
-        userId:user_id
-      }});
-      if(!task){
-        throw new BadRequestException('Не удалось создать задачу');
+      for(const task of createTaskDto.tasks){
+        await this.prisma.task.create({data:{
+          name:task.name,
+          description:task.descrition,
+          userId:user_id
+        }})
       }
       return HttpStatus.CREATED;
     } catch (error) {
@@ -57,10 +55,10 @@ export class TaskService {
 
   async update(id: number, updateTaskDto: UpdateTaskDto,user_id:number) {
     try {
-      const task = await this.prisma.task.update({where:{id:id,userId:user_id},data:{...updateTaskDto}});
-      if(!task){
-        throw new BadRequestException('Не удалось обновить');
-      }
+      // const task = await this.prisma.task.update({where:{id:id,userId:user_id},data:{...updateTaskDto}});
+      // if(!task){
+      //   throw new BadRequestException('Не удалось обновить');
+      // }
       return HttpStatus.OK;
     } catch (error) {
       throw new BadRequestException()

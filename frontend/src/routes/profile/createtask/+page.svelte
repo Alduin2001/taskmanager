@@ -18,7 +18,7 @@
                         <Button color="primary" class="w-100" onclick={addToLocal}>Ещё</Button>
                     </Col>
                     <Col>
-                        <Button color="success" class="w-100" onclick={createTask}>Сохранить</Button>
+                        <Button color="success" class="w-100" disabled={$createTasks.length>0 ? false : true} onclick={createTask}>Сохранить</Button>
                     </Col>
                 </Row>
                 <Row class="mt-2">
