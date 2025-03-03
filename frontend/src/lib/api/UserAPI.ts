@@ -3,7 +3,7 @@ import type { createUserDto, loginUserDto } from "$lib/interfaces/user";
 
 
 export default class UserAPI{
-    static async create(data:createUserDto){
+    static async create(data:createUserDto):Promise<any>{
         try {
             const response = await apiClient.post('/user/create',data);
             return response;
@@ -11,7 +11,7 @@ export default class UserAPI{
             return error;
         }
     }
-    static async login(data:loginUserDto){
+    static async login(data:loginUserDto):Promise<any>{
         try {
             const response = await apiClient.post('/auth/create',data);
             return response;

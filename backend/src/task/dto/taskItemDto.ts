@@ -4,5 +4,5 @@ export class TaskItemDto{
     @IsString()
     name:string
     @IsString()
-    descrition:string
+    description:string
 }

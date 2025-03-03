@@ -12,9 +12,10 @@ export class TaskService {
   async create(createTaskDto: CreateTaskDto, user_id:number) {
     try {
       for(const task of createTaskDto.tasks){
+        console.log(task);
         await this.prisma.task.create({data:{
           name:task.name,
-          description:task.descrition,
+          description:task.description,
           userId:user_id
         }})
       }
@@ -55,17 +56,25 @@ export class TaskService {
 
   async update(id: number, updateTaskDto: UpdateTaskDto,user_id:number) {
     try {
-      // const task = await this.prisma.task.update({where:{id:id,userId:user_id},data:{...updateTaskDto}});
-      // if(!task){
-      //   throw new BadRequestException('Не удалось обновить');
-      // }
+      const task = await this.prisma.task.update({where:{id:id,userId:user_id},data:{...updateTaskDto}});
+      if(!task){
+        throw new BadRequestException('Не удалось обновить');
+      }
       return HttpStatus.OK;
     } catch (error) {
       throw new BadRequestException()
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async remove(id: number, user_id:number) {
+    try {
+      const deleted = await this.prisma.task.delete({where:{id:id,userId:user_id}});
+      if(!deleted){
+        throw new BadRequestException('Не удалось удалить таск');
+      }
+      return HttpStatus.OK;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

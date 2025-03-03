@@ -5,6 +5,7 @@ import type { createUserDto, loginUserDto, UserItem } from '$lib/interfaces/user
 
 export const users = writable<UserItem[]>([]);
 export const isAuth = writable<boolean>(false);
+export const role = writable<number>(0);
 
 export async function createUser(data: createUserDto) {
     const response = await UserAPI.create(data);
@@ -16,6 +17,7 @@ export async function loginUser(data: loginUserDto) {
     const response = await UserAPI.login(data);
     if (response) {
         isAuth.update(() => true);
+        role.update(()=>response.data.role);
     }
     return response;
 }

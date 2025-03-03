@@ -4,6 +4,10 @@ export interface createTaskDto{
     description:string
 }
 
+export interface TasksI{
+    tasks:createTaskDto[]
+}
+
 export interface TaskItem{
     id:number
     name:string

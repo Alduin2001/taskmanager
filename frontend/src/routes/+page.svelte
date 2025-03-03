@@ -1,4 +1,5 @@
 <script>
+	import Notification from "$lib/components/Notification.svelte";
     import { Container, Button } from "@sveltestrap/sveltestrap";
   </script>
   
@@ -16,4 +17,5 @@
     <Button color="primary" href="/tasks" class="mt-3">
       Перейти к задачам
     </Button>
+    <Notification message="Успешно создан" variant="error"/>
   </Container>
