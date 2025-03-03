@@ -1,6 +1,8 @@
 import TaskAPI from "$lib/api/TaskAPI";
 import type { createTaskDto, TaskItem } from "$lib/interfaces/task";
 import { writable, get } from "svelte/store";
+import { addNotification } from "./NotificationStore";
+import { Variants } from "$lib/interfaces/notification";
 
 export const tasks = writable<TaskItem[]>([]);
 export const createTasks = writable<createTaskDto[]>([]);
@@ -10,13 +12,15 @@ export const addToLocal = ()=>{
     createTasks.update(state=>([...state,{id:Date.now(),name:'',description:''}]));
 }
 export const removeFromLocal = (id:number)=>{
-    createTasks.update(state=>state.filter(task=>task.id != id))
+    createTasks.update(state=>state.filter(task=>task.id != id));
+    addNotification({message:"Вы удалили задачу локально",variant:Variants.error});
 }
 export const updateLocal = (id:number,updateTask:createTaskDto)=>{
     createTasks.update(state=>state.map(task=>task.id === id ? {...task,...updateTask} : task));
 }
 export const removeAll = ()=>{
     createTasks.set([]);
+    addNotification({message:"Вы удалили все задачи локально",variant:Variants.error});
 }
 
 export async function createTask(){

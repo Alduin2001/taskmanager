@@ -5,7 +5,6 @@ import { get } from 'svelte/store';
 	import { goto } from '$app/navigation';
 let isOpen:boolean = false;
 
-
 console.log(get(isAuth));
 
 const logout = async ()=>{

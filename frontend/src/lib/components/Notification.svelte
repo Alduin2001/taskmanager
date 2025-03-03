@@ -1,20 +1,22 @@
 <script lang="ts">
-    export let message:string = "";
-    export let variant:string = "";
+    import { notification } from "$lib/store/NotificationStore";
+	import { Toast } from "@sveltestrap/sveltestrap";
 </script>
 
 
-<div class="notification">
-    {message}
+<div class="flex">
+    {#each $notification as el}
+    <Toast body header="Уведомление" delay={1500} autohide color={el.variant}>
+        {el.message}
+    </Toast>
+    {/each}
 </div>
 
 <style>
-    .notification{
-        padding:10px;
-        text-align: center;
-        outline:1px solid #eee;
-        max-width: 200px;
-        word-wrap: break-word;
+    .flex{
+        display:flex;
+        flex-direction: column;
+        gap:10px;
         position: absolute;
         top:10px;
         right:10px;

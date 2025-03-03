@@ -3,6 +3,8 @@
     import { createForm } from "svelte-forms-lib";
     import type { createTaskDto } from "$lib/interfaces/task";
 	import { removeFromLocal, updateLocal } from "$lib/store/TaskStore";
+	import { addNotification } from "$lib/store/NotificationStore";
+	import { Variants } from "$lib/interfaces/notification";
     export let id:number;
     export let name:string;
     export let description:string;
@@ -15,6 +17,7 @@
         onSubmit:async (data:createTaskDto)=>{
             console.log(data);
             updateLocal(id,data);
+            addNotification({message:"Вы подтвердили добавление задачи",variant:Variants.success});
         }
     });
 

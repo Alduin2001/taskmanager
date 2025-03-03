@@ -17,5 +17,4 @@
     <Button color="primary" href="/tasks" class="mt-3">
       Перейти к задачам
     </Button>
-    <Notification message="Успешно создан" variant="error"/>
   </Container>

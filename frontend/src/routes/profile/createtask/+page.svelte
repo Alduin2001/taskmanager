@@ -22,7 +22,7 @@
                     </Col>
                 </Row>
                 <Row class="mt-2">
-                    <Col><Button color="danger" class="w-100" onclick={removeAll}>Удалить все</Button></Col>
+                    <Col><Button color="danger" class="w-100" disabled={$createTasks.length>0 ? false : true} onclick={removeAll}>Удалить все</Button></Col>
                 </Row>
             </Form>
         </Col>
