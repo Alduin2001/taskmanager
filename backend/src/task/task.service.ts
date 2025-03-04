@@ -77,9 +77,48 @@ export class TaskService {
   // Фильтрация задач для пользователя
   async filterTasksUser(filterTaskDto:FilterTaskDto,user_id:number){
     try {
-      
+      const tasks = await this.prisma.task.findMany({
+        where:{
+          userId:user_id,
+          ...(filterTaskDto.name && {name:{contains:filterTaskDto.name,mode:'insensitive'}}),
+          ...(filterTaskDto.startDate && {createdAt:{gte:new Date(filterTaskDto.startDate)}}),
+          ...(filterTaskDto.endDate && {createdAt:{lte:new Date(filterTaskDto.endDate)}})
+        },
+        select:{
+          name:true,
+          description:true,
+          createdAt:true,
+          is_completed:true
+        }
+      });
+      return {tasks};
     } catch (error) {
-      
+      throw new BadRequestException(error.message);
+    }
+  }
+  // Фильтрация задач для админа
+  async filterTasksAdmin(filterTaskDto:FilterTaskDto){
+    try {
+      const tasks = await this.prisma.task.findMany({
+        where:{
+          ...(filterTaskDto.name && {name:{contains:filterTaskDto.name,mode:'insensitive'}}),
+          ...(filterTaskDto.startDate && {createdAt:{gte:new Date(filterTaskDto.startDate)}}),
+          ...(filterTaskDto.endDate && {createdAt:{lte:new Date(filterTaskDto.endDate)}})
+        },
+        select:{
+          name:true,
+          description:true,
+          createdAt:true,
+          is_completed:true,
+          user:{select:{
+            name:true,
+            surname:true
+          }}
+        }
+      });
+      return {tasks};
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
   }
   // Отметка о выполнении задачи

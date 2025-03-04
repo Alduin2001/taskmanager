@@ -51,11 +51,16 @@ export class TaskController {
   // Фильтрация задач для пользователя
   @UseGuards(AuthGuard('jwt'))
   @Get('filter_user_tasks')
-  filterUserTasks(@Query('name') filterTaskDto:FilterTaskDto,@Req() req:UserRequest){
+  filterUserTasks(@Query() filterTaskDto:FilterTaskDto,@Req() req:UserRequest){
     return this.taskService.filterTasksUser(filterTaskDto,req.user.id);
   }
   // Фильтрация задач для админа
-
+  @UseGuards(AuthGuard('jwt'),RoleGuard)
+  @Roles(Role.Admin)
+  @Get('filter_admin_tasks')
+  filterAdminTasks(@Query() filterTaskDto:FilterTaskDto,@Req() req:UserRequest){
+    return this.taskService.filterTasksAdmin(filterTaskDto);
+  }
   // Обновить задачу
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
