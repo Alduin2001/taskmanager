@@ -1,11 +1,24 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ArticleService {
-  create(createArticleDto: CreateArticleDto) {
-    return 'This action adds a new article';
+  constructor(
+    private prisma:PrismaService
+  ){}
+  async create(createArticleDto: CreateArticleDto,user_id:number,filename:string) {
+    try {
+      const {header,body} = createArticleDto;
+      const article = await this.prisma.article.create({data:{header,body,authorId:user_id,image:filename}});
+      if(!article){
+        throw new BadRequestException('Не удалось добавить пост');
+      }
+      return HttpStatus.CREATED;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   findAll() {

@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, Req, UploadedFile } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { UserRequest } from 'src/interfaces/UserI';
 
 @Controller('article')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
+  @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(FileInterceptor('image',{
+    storage:diskStorage({
+      destination:'./uploads/posts',
+      filename(req, file, callback) {
+        const filename = `${Date.now()}-${req.file?.originalname}`;
+        callback(null,filename);
+      },
+    })
+  }))
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articleService.create(createArticleDto);
+  create(@Body() createArticleDto: CreateArticleDto,@Req() req:UserRequest,@UploadedFile() file:Express.Multer.File) {
+    return this.articleService.create(createArticleDto,req.user.id,file.filename);
   }
 
   @Get()

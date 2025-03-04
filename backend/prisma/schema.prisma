@@ -30,6 +30,7 @@ model User{
   // Связь
   role  Role  @relation(fields: [roleId],references: [id],onDelete: Cascade)
   task  Task[]
+  articles  Article[]
 }
 
 model Task{
@@ -42,4 +43,16 @@ model Task{
   userId  Int
   // Связь
   user  User  @relation(fields: [userId],references: [id],onDelete: Cascade)
+}
+
+model Article{
+  id  Int @id @default(autoincrement())
+  header  String
+  body  String
+  image  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  authorId  Int
+  // Связь
+  author  User  @relation(fields: [authorId],references: [id],onDelete: Cascade)
 }
