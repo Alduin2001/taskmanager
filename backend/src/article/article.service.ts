@@ -21,19 +21,71 @@ export class ArticleService {
     }
   }
 
-  findAll() {
-    return `This action returns all article`;
+  async findAll() {
+    try {
+      const articles = await this.prisma.article.findMany({
+        select:{
+          id:true,
+          header:true,
+          image:true,
+          createdAt:true,
+          author:{select:{
+            name:true,
+            surname:true
+          }}
+        }
+      });
+      return {articles};
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
+  async findOne(id: number) {
+    try {
+      const article = await this.prisma.article.findFirst({
+        where:{id},
+        select:{
+          id:true,
+          header:true,
+          image:true,
+          body:true,
+          createdAt:true,
+          author:{select:{
+            name:true,
+            surname:true
+          }}
+        }
+      });
+      return {article};
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+  async update(id: number, updateArticleDto: UpdateArticleDto) {
+    try {
+      const update = await this.prisma.article.update({where:{id},data:{
+        ...updateArticleDto
+      }});
+      if(!update){
+        throw new BadRequestException('Не удалось обновить');
+      }
+      return HttpStatus.OK;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
+  async remove(id: number) {
+    try {
+      const deleted = await this.prisma.article.delete({where:{id}});
+      if(!deleted){
+        throw new BadRequestException('Не удалось удалить');
+      }
+      return HttpStatus.OK;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }
