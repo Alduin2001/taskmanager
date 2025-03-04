@@ -9,6 +9,7 @@ export const users = writable<UserItem[]>([]);
 export const isAuth = writable<boolean>(false);
 export const role = writable<number>(0);
 
+// Регистрация
 export async function createUser(data: createUserDto) {
     const response = await UserAPI.create(data);
     console.log(response);
@@ -16,6 +17,7 @@ export async function createUser(data: createUserDto) {
     return response;
 }
 
+// Вход в профиль
 export async function loginUser(data: loginUserDto) {
     const response = await UserAPI.login(data);
     if (response) {
@@ -26,6 +28,7 @@ export async function loginUser(data: loginUserDto) {
     return response;
 }
 
+// Выход из профиля
 export async function logoutUser() {
     const response = await UserAPI.logout();
     if (response) {

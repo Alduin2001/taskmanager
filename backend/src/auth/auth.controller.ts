@@ -15,6 +15,7 @@ export class AuthController {
     const {token,role} = await this.authService.create(createAuthDto);
     console.log(createAuthDto);
     res.cookie('jwt',token,{
+      httpOnly:true,
       sameSite:'strict',
       maxAge:1000*60*60*12
     });

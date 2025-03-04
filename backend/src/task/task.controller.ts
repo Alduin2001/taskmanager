@@ -17,7 +17,7 @@ export class TaskController {
   create(@Body(new ValidationPipe()) createTaskDto: CreateTaskDto, @Req() req:UserRequest) {
     return this.taskService.create(createTaskDto,req.user.id);
   }
-
+  // Вывести список всех задач
   @UseGuards(AuthGuard('jwt'),RoleGuard)
   @Roles(Role.Admin)
   @Get()
@@ -25,12 +25,22 @@ export class TaskController {
     console.log(req.user.role);
     return this.taskService.findAll();
   }
+  @UseGuards(AuthGuard('jwt'))
+  getMyTasks(@Req() req:UserRequest){
+    return this.taskService.getMyTasks(req.user.id);
+  }
 
+  @UseGuards(AuthGuard('jwt'),RoleGuard)
+  @Roles(Role.Admin)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.taskService.findOne(+id);
   }
-
+  @UseGuards(AuthGuard('jwt'))
+  findOneMy(id:number,@Req() req:UserRequest){
+    return this.taskService.findOneMy(id,req.user.id);
+  }
+  
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto, @Req() req:UserRequest) {
