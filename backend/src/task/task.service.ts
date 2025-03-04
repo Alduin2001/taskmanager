@@ -3,6 +3,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaPromise } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UpdateStatusDto } from './dto/updateStatus.dto';
 
 @Injectable()
 export class TaskService {
@@ -72,8 +73,24 @@ export class TaskService {
       throw new BadRequestException(error.message);
     }
   }
+  // Отметка о выполнении задачи
+  async completeTask(id:number,updateStatusDto:UpdateStatusDto,user_id:number){
+    try {
+      const {is_completed} = updateStatusDto;
+
+      const task = await this.prisma.task.update({
+        where:{id:id,userId:user_id},
+        data:{is_completed}
+      });
+      if(!task){
+        throw new BadRequestException('Не удалось обновить статус задачи');
+      }
+      return HttpStatus.OK;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
   // Обновить задачу
-  
   async update(id: number, updateTaskDto: UpdateTaskDto,user_id:number) {
     try {
       const task = await this.prisma.task.update({where:{id:id,userId:user_id},data:{...updateTaskDto}});

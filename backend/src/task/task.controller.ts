@@ -20,23 +20,25 @@ export class TaskController {
   // Вывести список всех задач
   @UseGuards(AuthGuard('jwt'),RoleGuard)
   @Roles(Role.Admin)
-  @Get()
+  @Get('all_tasks')
   findAll(@Req() req:UserRequest) {
     console.log(req.user.role);
     return this.taskService.findAll();
   }
   @UseGuards(AuthGuard('jwt'))
+  @Get('my_all')
   getMyTasks(@Req() req:UserRequest){
     return this.taskService.getMyTasks(req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'),RoleGuard)
   @Roles(Role.Admin)
-  @Get(':id')
+  @Get('admin/:id')
   findOne(@Param('id') id: string) {
     return this.taskService.findOne(+id);
   }
   @UseGuards(AuthGuard('jwt'))
+  @Get('mytask/:id')
   findOneMy(id:number,@Req() req:UserRequest){
     return this.taskService.findOneMy(id,req.user.id);
   }
