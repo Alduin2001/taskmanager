@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Col, Container, Form, Row } from "@sveltestrap/sveltestrap";
     import {addToLocal, createTask, createTasks, removeAll} from '$lib/store/TaskStore';
-	import TaskFormItem from "$lib/components/TaskFormItem.svelte";
+	import TaskFormItem from "$lib/components/tasks/TaskFormItem.svelte";
 
 </script>
 

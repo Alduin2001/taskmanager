@@ -28,6 +28,7 @@ const logout = async ()=>{
                 <DropdownMenu end>
                     <DropdownItem href="/">Главная</DropdownItem>
                     <DropdownItem href="/about">О нас</DropdownItem>
+                    <DropdownItem href="/profile/tasks">Список задач</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
             {#if !$isAuth}
