@@ -4,6 +4,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaPromise } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateStatusDto } from './dto/updateStatus.dto';
+import { FilterTaskDto } from './dto/filterTask.dto';
 
 @Injectable()
 export class TaskService {
@@ -71,6 +72,14 @@ export class TaskService {
       return {task};
     } catch (error) {
       throw new BadRequestException(error.message);
+    }
+  }
+  // Фильтрация задач для пользователя
+  async filterTasksUser(filterTaskDto:FilterTaskDto,user_id:number){
+    try {
+      
+    } catch (error) {
+      
     }
   }
   // Отметка о выполнении задачи

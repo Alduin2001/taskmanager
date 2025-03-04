@@ -8,6 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './config/jwt.strategy';
+import { ArticleModule } from './article/article.module';
 
 @Global()
 @Module({
@@ -31,7 +32,8 @@ import { JwtStrategy } from './config/jwt.strategy';
     RoleModule,
     UserModule,
     AuthModule,
-    TaskModule
+    TaskModule,
+    ArticleModule
   ],
   controllers: [],
   providers: [PrismaService,JwtService,JwtStrategy],
