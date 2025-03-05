@@ -11,6 +11,7 @@ import { UserRequest } from 'src/interfaces/UserI';
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
+  // Создание постов
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(FileInterceptor('image',{
     storage:diskStorage({
@@ -26,21 +27,23 @@ export class ArticleController {
     return this.articleService.create(createArticleDto,req.user.id,file.filename);
   }
 
+  // Получение всех постов
   @Get()
   findAll() {
     return this.articleService.findAll();
   }
 
+  // Получение одного поста по id
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.articleService.findOne(+id);
   }
-
+  // Обновление одного поста
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
     return this.articleService.update(+id, updateArticleDto);
   }
-
+  // Удаление одного поста
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.articleService.remove(+id);

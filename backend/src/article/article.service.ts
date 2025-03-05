@@ -43,6 +43,22 @@ export class ArticleService {
       throw new BadRequestException(error.message);
     }
   }
+  // Вывод постов, которые добавил пользователь
+  async findMy(user_id:number){
+    try {
+      const articles = await this.prisma.article.findMany({
+        where:{authorId:user_id},
+        select:{
+          header:true,
+          image:true,
+          createdAt:true
+        }
+      });
+      return {articles};
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
   // Поиск одного по айди
   async findOne(id: number) {
     try {
