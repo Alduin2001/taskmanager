@@ -6,6 +6,9 @@ export default defineConfig({
 	optimizeDeps:{
 		force:true
 	},
+	build:{
+		assetsDir:'assets'
+	},
 	server:{
 		port:5177
 	}

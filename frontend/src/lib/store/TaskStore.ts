@@ -37,8 +37,9 @@ export async function createTask(){
 }
 
 // Получение задач из БД
-export async function getTasks():Promise<any>{
-    const response = await TaskAPI.get();
+export async function getMyTasks():Promise<any>{
+    const response = await TaskAPI.getMy();
+    console.log(response);
     return response;
 }
 

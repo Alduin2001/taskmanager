@@ -24,15 +24,4 @@
 		right: 10px;
 		z-index: 10;
 	}
-	.success {
-		background-color: #28a745; /* Зелёный */
-	}
-
-	.danger {
-		background-color: #dc3545; /* Красный */
-	}
-
-	.warning {
-		background-color: #ffc107; /* Жёлтый */
-	}
 </style>
