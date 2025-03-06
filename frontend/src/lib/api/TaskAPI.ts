@@ -29,6 +29,15 @@ export default class TaskAPI{
             return error;
         }
     }
+    // Отправка запроса на обновление статуса задачи
+    static async updateStatus(id:number,status:boolean){
+        try {
+            const response = await apiClient.patch(`/task/complete_task/${id}`,{is_completed:status});
+            return response;
+        } catch (error) {
+            return error;
+        }
+    }
     // Отправка запроса на удаление задачи
     static async remove(id:number):Promise<any>{
         try {

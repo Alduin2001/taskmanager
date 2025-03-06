@@ -39,6 +39,7 @@ export async function createTask(){
 // Получение задач из БД
 export async function getMyTasks():Promise<any>{
     const response = await TaskAPI.getMy();
+    tasks.set(response.data.tasks);
     console.log(response);
     return response;
 }
@@ -49,6 +50,11 @@ export async function updateTask(id:number,data:createTaskDto):Promise<any>{
     return response;
 }
 
+// Обновление статуса задачи
+export async function updateStatusTask(id:number,status:boolean):Promise<any>{
+    const response = await TaskAPI.updateStatus(id,status);
+    return response;
+}
 // Удаление задачи
 export async function removeTask(id:number):Promise<any>{
     const response = await TaskAPI.remove(id);

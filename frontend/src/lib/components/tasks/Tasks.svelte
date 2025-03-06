@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { Container, Row } from "@sveltestrap/sveltestrap";
 	import TaskItem from "./TaskItem.svelte";
-	import { tasks } from "$lib/store/TaskStore";
+	import { getMyTasks, tasks } from "$lib/store/TaskStore";
+    import { onMount } from "svelte";
 
-
+    onMount(()=>{
+        getMyTasks();
+    })
 
 </script>
 

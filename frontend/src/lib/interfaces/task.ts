@@ -13,4 +13,5 @@ export interface TaskItem{
     name:string
     description:string
     createdAt:string
+    is_completed:boolean
 }
