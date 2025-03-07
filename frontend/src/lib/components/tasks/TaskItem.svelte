@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { TaskItem } from "$lib/interfaces/task";
-	import { isOpenRemove, openRemoveModal, updateStatusTask } from "$lib/store/TaskStore";
+	import { isOpenEdit, isOpenRemove, openEditModal, openRemoveModal, updateStatusTask } from "$lib/store/TaskStore";
 	import { Button, Card, CardBody, CardHeader, CardText, CardTitle, Col, Input, InputGroup, InputGroupText, Row } from "@sveltestrap/sveltestrap";
     import {format} from 'date-fns';
     import { onMount } from "svelte";
 	import RemoveModal from "./RemoveModal.svelte";
+	import EditModal from "./EditModal.svelte";
     export let data:TaskItem = {
         id:0,
         name:"",
@@ -34,7 +35,7 @@
             <Input type="switch" bind:checked={data.is_completed} label="Выполнена" class="mb-2" onchange={updateStatus}/>
             <Row>
                 <Col>
-                    <Button class="w-100" color="primary">Редактировать</Button>
+                    <Button class="w-100" color="primary" onclick={openEditModal}>Редактировать</Button>
                 </Col>
                 <Col>
                     <Button class="w-100" color="danger" onclick={openRemoveModal}>Удалить</Button>
@@ -43,6 +44,10 @@
         </CardBody>
     </Card>
 </Col>
+
+{#if $isOpenEdit}
+    <EditModal data={{id:data.id,name:data.name,description:data.description}}/>
+{/if}
 
 {#if $isOpenRemove}
     <RemoveModal id={data.id}/>
