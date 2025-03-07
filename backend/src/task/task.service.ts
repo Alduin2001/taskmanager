@@ -147,7 +147,7 @@ export class TaskService {
       }
       return HttpStatus.OK;
     } catch (error) {
-      throw new BadRequestException()
+      throw new BadRequestException(error.message);
     }
   }
   // Удалить задачу

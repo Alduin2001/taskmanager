@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { TaskItem } from "$lib/interfaces/task";
 	import { isOpenEdit, isOpenRemove, openEditModal, openRemoveModal, updateStatusTask } from "$lib/store/TaskStore";
-	import { Button, Card, CardBody, CardHeader, CardText, CardTitle, Col, Input, InputGroup, InputGroupText, Row } from "@sveltestrap/sveltestrap";
+	import { Button, Card, CardBody, CardHeader, CardText, CardTitle, Col, Input, Row } from "@sveltestrap/sveltestrap";
     import {format} from 'date-fns';
     import { onMount } from "svelte";
 	import RemoveModal from "./RemoveModal.svelte";
@@ -22,6 +22,13 @@
         console.log(data.is_completed);
         await updateStatusTask(data.id,data.is_completed);
     }
+
+    const openRemove = ()=>{
+        openRemoveModal(data.id);
+    }
+    const openEdit = ()=>{
+        openEditModal(data.id,{name:data.name,description:data.description});
+    }
 </script>
 
 <Col>
@@ -35,10 +42,10 @@
             <Input type="switch" bind:checked={data.is_completed} label="Выполнена" class="mb-2" onchange={updateStatus}/>
             <Row>
                 <Col>
-                    <Button class="w-100" color="primary" onclick={openEditModal}>Редактировать</Button>
+                    <Button class="w-100" color="primary" onclick={openEdit}>Редактировать</Button>
                 </Col>
                 <Col>
-                    <Button class="w-100" color="danger" onclick={openRemoveModal}>Удалить</Button>
+                    <Button class="w-100" color="danger" onclick={openRemove}>Удалить</Button>
                 </Col>
             </Row>
         </CardBody>
@@ -46,9 +53,9 @@
 </Col>
 
 {#if $isOpenEdit}
-    <EditModal data={{id:data.id,name:data.name,description:data.description}}/>
+    <EditModal/>
 {/if}
 
 {#if $isOpenRemove}
-    <RemoveModal id={data.id}/>
+    <RemoveModal/>
 {/if}

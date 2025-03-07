@@ -1,14 +1,16 @@
 import TaskAPI from "$lib/api/TaskAPI";
-import type { createTaskDto, TaskItem } from "$lib/interfaces/task";
+import type { createTaskDto, TaskItem, updateTaskDto } from "$lib/interfaces/task";
 import { writable, get } from "svelte/store";
 import { addNotification } from "./NotificationStore";
 import { Variants } from "$lib/interfaces/notification";
+import { add } from "date-fns";
 
 export const tasks = writable<TaskItem[]>([]);
 export const createTasks = writable<createTaskDto[]>([]);
 export const isOpenRemove = writable<boolean>(false);
 export const isOpenEdit = writable<boolean>(false);
-
+export const selectedId = writable<number>(0);
+export const editModal = writable<updateTaskDto>({name:"",description:""});
 // Функции для локального управления
 // Добавить локально в стейт
 export const addToLocal = ()=>{
@@ -25,7 +27,8 @@ export const updateLocal = (id:number,updateTask:createTaskDto)=>{
 }
 
 // Открытие модального окна для подтверждения удаления
-export const openRemoveModal = ()=>{
+export const openRemoveModal = (id:number)=>{
+    selectedId.set(id);
     isOpenRemove.set(true);
 }
 // Закрытие модального окна для подтверждения удаления
@@ -33,8 +36,10 @@ export const closeRemoveModal = ()=>{
     isOpenRemove.set(false);
 }
 // Открытие модального окна для редактирования
-export const openEditModal = ()=>{
+export const openEditModal = (id:number,data:updateTaskDto)=>{
     isOpenEdit.set(true);
+    selectedId.set(id);
+    editModal.set({name:data.name,description:data.description});
 }
 // Закрытие модального окна для редактирования
 export const closeEditModal = ()=>{
@@ -65,8 +70,11 @@ export async function getMyTasks():Promise<any>{
 }
 
 // Обновление задачи
-export async function updateTask(id:number,data:createTaskDto):Promise<any>{
+export async function updateTask(id:number,data:updateTaskDto):Promise<any>{
     const response = await TaskAPI.update(id,data);
+    if(response){
+        tasks.update(state=>state.map(task=>task.id === id ? {...task,...data} : task));
+    }
     return response;
 }
 
@@ -76,11 +84,10 @@ export async function updateStatusTask(id:number,status:boolean):Promise<any>{
     return response;
 }
 // Удаление задачи
-export async function removeTask(id:number):Promise<any>{
-    console.log(id);
-    const response = await TaskAPI.remove(id);
+export async function removeTask():Promise<any>{
+    const response = await TaskAPI.remove(get(selectedId));
     if(response){
-        tasks.update(state=>state.filter((el)=>el.id!=id));
+        tasks.update(state=>state.filter((el)=>el.id!=get(selectedId)));
     }
     response;
 }

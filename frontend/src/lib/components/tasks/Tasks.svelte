@@ -10,7 +10,8 @@
 
 </script>
 
-<Container>
+<Container fluid>
+    
     <Row>
         {#if $tasks.length>0}
             {#each $tasks as props}

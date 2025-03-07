@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { closeRemoveModal, isOpenRemove, openRemoveModal, removeTask } from "$lib/store/TaskStore";
+	import {selectedId, closeRemoveModal, isOpenRemove, openRemoveModal, removeTask } from "$lib/store/TaskStore";
 	import { Button, Col, Modal, ModalBody, ModalHeader, Row } from "@sveltestrap/sveltestrap";
 	import { onMount } from "svelte";
-    export let id:number = 0;
+    import { get } from "svelte/store";
+    
     
     onMount(()=>{
-        console.log(id);
+        console.log(get(selectedId));
     });
 
     const removeAnyTask = async ()=>{
-        await removeTask(id);
+        await removeTask();
     }
 </script>
 

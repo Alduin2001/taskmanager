@@ -1,25 +1,24 @@
 <script lang="ts">
-	import type { createTaskDto } from "$lib/interfaces/task";
-	import { isOpenEdit, closeEditModal, updateTask } from "$lib/store/TaskStore";
+	import { Variants } from "$lib/interfaces/notification";
+	import type { updateTaskDto } from "$lib/interfaces/task";
+	import { addNotification } from "$lib/store/NotificationStore";
+	import { isOpenEdit,editModal,selectedId, closeEditModal, updateTask } from "$lib/store/TaskStore";
 	import { Button, Col, Form, FormGroup, FormText, Input, InputGroup, InputGroupText, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "@sveltestrap/sveltestrap";
 	import { onMount } from "svelte";
     import { createForm } from "svelte-forms-lib";
-    export let data:createTaskDto = {
-        id:0,
-        name:"",
-        description:""
-    }
+	import { get } from "svelte/store";
     onMount(()=>{
-        console.log(data);
+        console.log(editModal);
     });
-    const {form,handleChange,handleSubmit,errors} = createForm<createTaskDto>({
+    const {form,handleChange,handleSubmit,errors} = createForm<updateTaskDto>({
         initialValues:{
-            id:data.id,
-            name:data.name,
-            description:data.description
+            name:get(editModal).name,
+            description:get(editModal).description
         },
-        onSubmit:async (data:createTaskDto)=>{
-            await updateTask(data.id,data);
+        onSubmit:async (data:updateTaskDto)=>{
+            await updateTask(get(selectedId),{name:data.name,description:data.description})
+            .then(()=>addNotification({message:"Данные успешно изменены",variant:Variants.success}));
+            closeEditModal();
         }
     })
 
@@ -42,7 +41,7 @@
                 <Button color="primary" type="submit" class="w-100">Подтвердить</Button>
             </Col>
             <Col>
-                <Button color="danger" class="w-100" onclick={closeEditModal}>Отменить</Button>
+                <Button color="danger" type="button" class="w-100" onclick={closeEditModal}>Отменить</Button>
             </Col>
         </Row>
     </Form>

@@ -1,5 +1,5 @@
 import { apiClient } from "$lib/config/apiClient";
-import type { createTaskDto,TasksI } from "$lib/interfaces/task";
+import type { createTaskDto,TasksI, updateTaskDto } from "$lib/interfaces/task";
 
 export default class TaskAPI{
     // Создание задач
@@ -21,7 +21,7 @@ export default class TaskAPI{
         }
     }
     // Отправка запроса на обновление задачи
-    static async update(id:number,data:createTaskDto){
+    static async update(id:number,data:updateTaskDto){
         try {
             const response = await apiClient.patch(`/task/${id}`,data);
             return response;

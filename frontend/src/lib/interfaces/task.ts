@@ -4,6 +4,11 @@ export interface createTaskDto{
     description:string
 }
 
+export interface updateTaskDto{
+    name:string,
+    description:string
+}
+
 export interface TasksI{
     tasks:createTaskDto[]
 }
@@ -14,4 +19,8 @@ export interface TaskItem{
     description:string
     createdAt:string
     is_completed:boolean
+}
+
+export interface SearchTaskI{
+    
 }
