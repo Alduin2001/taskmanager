@@ -22,5 +22,7 @@ export interface TaskItem{
 }
 
 export interface SearchTaskI{
-    
+    name?:string | undefined
+    startDate?:string | undefined
+    endDate?:string | undefined
 }

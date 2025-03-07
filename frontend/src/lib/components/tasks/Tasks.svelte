@@ -3,6 +3,7 @@
 	import TaskItem from "./TaskItem.svelte";
 	import { getMyTasks, tasks } from "$lib/store/TaskStore";
     import { onMount } from "svelte";
+	import SearchTaskForm from "./SearchTaskForm.svelte";
 
     onMount(()=>{
         getMyTasks();
@@ -11,8 +12,8 @@
 </script>
 
 <Container fluid>
-    
-    <Row>
+    <SearchTaskForm/>
+    <Row class="mt-2">
         {#if $tasks.length>0}
             {#each $tasks as props}
                 <TaskItem data={props}/>
