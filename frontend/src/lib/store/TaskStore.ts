@@ -6,6 +6,7 @@ import { Variants } from "$lib/interfaces/notification";
 
 export const tasks = writable<TaskItem[]>([]);
 export const createTasks = writable<createTaskDto[]>([]);
+export const isOpenRemove = writable<boolean>(false);
 
 // Функции для локального управления
 // Добавить локально в стейт
@@ -21,6 +22,15 @@ export const removeFromLocal = (id:number)=>{
 export const updateLocal = (id:number,updateTask:createTaskDto)=>{
     createTasks.update(state=>state.map(task=>task.id === id ? {...task,...updateTask} : task));
 }
+
+// Открытие модального окна для подтверждения удаления
+export const openRemoveModal = ()=>{
+    isOpenRemove.set(true);
+}
+// Закрытие модального окна для подтверждения удаления
+export const closeRemoveModal = ()=>{
+    isOpenRemove.set(false);
+}
 // Удалить все локально
 export const removeAll = ()=>{
     createTasks.set([]);
@@ -32,6 +42,7 @@ export async function createTask(){
     
     const response = await TaskAPI.create({tasks:get(createTasks)});
     addNotification({message:"Задачи успешно добавлены",variant:Variants.success});
+    removeAll();
     console.log(response);
     return response;
 }
@@ -58,5 +69,8 @@ export async function updateStatusTask(id:number,status:boolean):Promise<any>{
 // Удаление задачи
 export async function removeTask(id:number):Promise<any>{
     const response = await TaskAPI.remove(id);
+    if(response){
+        tasks.update(state=>state.filter((el)=>el.id!==id));
+    }
     response;
 }
