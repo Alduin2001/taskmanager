@@ -7,6 +7,7 @@ import { Variants } from "$lib/interfaces/notification";
 export const tasks = writable<TaskItem[]>([]);
 export const createTasks = writable<createTaskDto[]>([]);
 export const isOpenRemove = writable<boolean>(false);
+export const isOpenEdit = writable<boolean>(false);
 
 // Функции для локального управления
 // Добавить локально в стейт
@@ -30,6 +31,14 @@ export const openRemoveModal = ()=>{
 // Закрытие модального окна для подтверждения удаления
 export const closeRemoveModal = ()=>{
     isOpenRemove.set(false);
+}
+// Открытие модального окна для редактирования
+export const openEditModal = ()=>{
+    isOpenEdit.set(true);
+}
+// Закрытие модального окна для редактирования
+export const closeEditModal = ()=>{
+    isOpenEdit.set(false);
 }
 // Удалить все локально
 export const removeAll = ()=>{
@@ -68,9 +77,10 @@ export async function updateStatusTask(id:number,status:boolean):Promise<any>{
 }
 // Удаление задачи
 export async function removeTask(id:number):Promise<any>{
+    console.log(id);
     const response = await TaskAPI.remove(id);
     if(response){
-        tasks.update(state=>state.filter((el)=>el.id!==id));
+        tasks.update(state=>state.filter((el)=>el.id!=id));
     }
     response;
 }

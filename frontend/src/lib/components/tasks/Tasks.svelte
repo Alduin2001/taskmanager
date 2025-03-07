@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Row } from "@sveltestrap/sveltestrap";
+	import { Alert, Container, Row } from "@sveltestrap/sveltestrap";
 	import TaskItem from "./TaskItem.svelte";
 	import { getMyTasks, tasks } from "$lib/store/TaskStore";
     import { onMount } from "svelte";
@@ -12,8 +12,13 @@
 
 <Container>
     <Row>
-        {#each $tasks as props}
-            <TaskItem data={props}/>
-        {/each}
+        {#if $tasks.length>0}
+            {#each $tasks as props}
+                <TaskItem data={props}/>
+            {/each}
+
+        {:else}
+            <Alert color="danger">Задач нет</Alert>
+        {/if}
     </Row>
 </Container>
