@@ -1,5 +1,5 @@
 import { apiClient } from "$lib/config/apiClient";
-import type { createTaskDto,TasksI, updateTaskDto } from "$lib/interfaces/task";
+import type { createTaskDto,SearchTaskI,TasksI, updateTaskDto } from "$lib/interfaces/task";
 
 export default class TaskAPI{
     // Создание задач
@@ -33,6 +33,15 @@ export default class TaskAPI{
     static async updateStatus(id:number,status:boolean){
         try {
             const response = await apiClient.patch(`/task/complete_task/${id}`,{is_completed:status});
+            return response;
+        } catch (error) {
+            return error;
+        }
+    }
+    // Поиск задач по параметрам
+    static async search(data:SearchTaskI):Promise<any>{
+        try {
+            const response = await apiClient.get(`/task/filter_user_task?name=${data.name}&startDate=${data.startDate}&endDate=${data.endDate}`);
             return response;
         } catch (error) {
             return error;

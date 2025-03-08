@@ -85,6 +85,7 @@ export class TaskService {
           ...(filterTaskDto.endDate && {createdAt:{lte:new Date(filterTaskDto.endDate)}})
         },
         select:{
+          id:true,
           name:true,
           description:true,
           createdAt:true,

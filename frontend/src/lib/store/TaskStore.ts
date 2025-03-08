@@ -1,5 +1,5 @@
 import TaskAPI from "$lib/api/TaskAPI";
-import type { createTaskDto, TaskItem, updateTaskDto } from "$lib/interfaces/task";
+import type { createTaskDto, SearchTaskI, TaskItem, updateTaskDto } from "$lib/interfaces/task";
 import { writable, get } from "svelte/store";
 import { addNotification } from "./NotificationStore";
 import { Variants } from "$lib/interfaces/notification";
@@ -66,6 +66,13 @@ export async function getMyTasks():Promise<any>{
     const response = await TaskAPI.getMy();
     tasks.set(response.data.tasks);
     console.log(response);
+    return response;
+}
+// Поиск задачи из БД
+export async function name(data:SearchTaskI):Promise<any>{
+    const response = await TaskAPI.search(data);
+    console.log(tasks);
+    tasks.set(response.data.tasks);
     return response;
 }
 
