@@ -69,7 +69,7 @@ export async function getMyTasks():Promise<any>{
     return response;
 }
 // Поиск задачи из БД
-export async function name(data:SearchTaskI):Promise<any>{
+export async function SearchTasks(data:SearchTaskI):Promise<any>{
     const response = await TaskAPI.search(data);
     console.log(tasks);
     tasks.set(response.data.tasks);

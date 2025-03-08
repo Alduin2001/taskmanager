@@ -1,5 +1,6 @@
 import { apiClient } from "$lib/config/apiClient";
 import type { createTaskDto,SearchTaskI,TasksI, updateTaskDto } from "$lib/interfaces/task";
+import type { AxiosError, AxiosResponse } from "axios";
 
 export default class TaskAPI{
     // Создание задач
@@ -41,7 +42,14 @@ export default class TaskAPI{
     // Поиск задач по параметрам
     static async search(data:SearchTaskI):Promise<any>{
         try {
-            const response = await apiClient.get(`/task/filter_user_task?name=${data.name}&startDate=${data.startDate}&endDate=${data.endDate}`);
+
+            const response = await apiClient.get(`/task/filter_user_tasks`,{
+                params:{
+                    name:data.name,
+                    startDate:data.startDate,
+                    endDate:data.endDate
+                }
+            });
             return response;
         } catch (error) {
             return error;
