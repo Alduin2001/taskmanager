@@ -5,6 +5,7 @@
 	import type { createArticleDto } from "$lib/interfaces/article";
 	import { addNotification } from "$lib/store/NotificationStore";
 	import { Variants } from "$lib/interfaces/notification";
+	import { createArticle } from "$lib/store/ArticleStore";
 
     let fileSelected:File | null = null;
     const {form,errors,handleChange,handleSubmit,handleReset} = createForm<createArticleDto>({
@@ -22,7 +23,7 @@
             formData.append('image',fileSelected);
             formData.append('header',data.header);
             formData.append('body',data.body);
-            await createArticleValid(formData);
+            await createArticle(formData);   
         }
     });
     const handleUpload = (event:Event)=>{
@@ -33,7 +34,7 @@
     }
 </script>
 
-<Form on:submit={handleSubmit}>
+<Form on:submit={handleSubmit} enctype="multipart/form-data">
     <FormGroup>
         <FormText>Название поста</FormText>
         <Input placeholder="Введите заголовок поста" bind:value={$form.header} onchange={handleChange}/>
