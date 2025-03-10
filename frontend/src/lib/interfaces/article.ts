@@ -14,3 +14,7 @@ export interface ArticleItem{
         surname:string
     }
 }
+
+export interface ApiResponse<T>{
+    data:T
+}

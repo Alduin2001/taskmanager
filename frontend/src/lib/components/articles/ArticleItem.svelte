@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Card, CardBody, CardFooter, CardHeader, CardImg, CardText, CardTitle, Col } from "@sveltestrap/sveltestrap";
-    import type { ArticleI } from "$lib/interfaces/articles";
+    import type { ArticleItem } from "$lib/interfaces/article";
 
-    export let data:ArticleI = {
+    export let data:ArticleItem = {
         id:0,
         header:"",
         body:"",
