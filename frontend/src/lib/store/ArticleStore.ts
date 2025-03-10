@@ -22,6 +22,7 @@ export async function getArticles():Promise<any>{
 // Получить один пост по айди
 export async function getArticle(id:number):Promise<any>{
     const response = await ArticleAPI.getArticle(id);
+    console.log(response);
     return response;
 }
 

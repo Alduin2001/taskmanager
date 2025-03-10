@@ -7,7 +7,7 @@ export interface ArticleItem{
     id:number
     header:string
     image:string
-    createdAt:string
+    createdAt:string | Date
     author:{
         name:string
         surname:string
