@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { Alert, Container, Row } from "@sveltestrap/sveltestrap";
-    import { articles } from "$lib/store/ArticleStore";
+    import { articles, getArticles } from "$lib/store/ArticleStore";
 	import ArticleItem from "./ArticleItem.svelte";
+	import { onMount } from "svelte";
 
-
+    onMount(async ()=>{
+        await getArticles();
+    });
 </script>
 
 <Container>

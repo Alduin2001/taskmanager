@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { Card, CardBody, CardFooter, CardHeader, CardImg, CardText, CardTitle, Col } from "@sveltestrap/sveltestrap";
+	import { Button, Card, CardBody, CardFooter, CardHeader, CardImg, CardText, CardTitle, Col } from "@sveltestrap/sveltestrap";
     import type { ArticleItem } from "$lib/interfaces/article";
-
+    import { format } from "date-fns";
     export let data:ArticleItem = {
         id:0,
         header:"",
-        body:"",
         createdAt:"",
         image:"",
         author:{
@@ -21,12 +20,12 @@
         <CardTitle>{data.header}</CardTitle>
     </CardHeader>
     <CardBody>
-        <CardImg src={data.image} alt="Изображение поста"/>
-        <CardText>{data.body}</CardText>
+        <CardImg src={`http://localhost:3005/uploads/posts/${data.image}`} alt="Изображение поста"/>
+        <Button class="mt-2" color="primary">Подробнее</Button>
     </CardBody>
     <CardFooter>
         <CardText>Автор {data.author.name} {data.author.surname}</CardText>
-        <CardText class="text-end">Создан {data.createdAt}</CardText>
+        <CardText class="text-end">Создан {format(data.createdAt,"dd-MM-yyyy")}</CardText>
     </CardFooter>
 </Card>
 </Col>

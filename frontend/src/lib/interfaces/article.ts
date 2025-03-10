@@ -6,13 +6,16 @@ export interface createArticleDto{
 export interface ArticleItem{
     id:number
     header:string
-    body:string
     image:string
     createdAt:string
     author:{
         name:string
         surname:string
     }
+}
+
+export interface SingleArticleItem extends ArticleItem{
+    body:string
 }
 
 export interface ApiResponse<T>{

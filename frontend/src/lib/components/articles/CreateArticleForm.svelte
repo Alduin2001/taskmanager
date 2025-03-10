@@ -23,13 +23,14 @@
             formData.append('image',fileSelected);
             formData.append('header',data.header);
             formData.append('body',data.body);
+            console.log(formData);
             await createArticle(formData);   
         }
     });
     const handleUpload = (event:Event)=>{
         const target = event.target as HTMLInputElement;
         if(target.files && target.files?.length>0){
-            fileSelected = target?.files[0];
+            fileSelected = target.files[0];
         }
     }
 </script>
