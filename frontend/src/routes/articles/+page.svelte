@@ -9,8 +9,8 @@ import { Container } from "@sveltestrap/sveltestrap";
     <title>Посты</title>
 </svelte:head>
 
-<Container>
-    Все Посты
+<Container class="mt-2">
+    <h1 class="text-center">Все Посты</h1>
     <Articles />
 </Container>
 

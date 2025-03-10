@@ -8,7 +8,7 @@ export default class UserAPI{
     // Регистрация
     static async create(data:createUserDto):Promise<any>{
         try {
-            const response = await apiClient.post('/user/create',data);
+            const response = await apiClient.post('/user',data);
             return response;
         } catch (error) {
             return error;

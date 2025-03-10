@@ -17,7 +17,7 @@
 
 		onSubmit:async data=>{
 			const response = await createUser(data);
-			if(response){
+			if(response.status>=200 && response.status<300){
 				goto('/auth/login');
 			}
 		}

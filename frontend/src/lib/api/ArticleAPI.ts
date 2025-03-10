@@ -1,10 +1,10 @@
 import { apiClient } from "$lib/config/apiClient";
-import type { ApiResponse, createArticleDto } from "$lib/interfaces/article";
+import type { ApiResponse, createArticleDto, createArticleForm } from "$lib/interfaces/article";
 import { AxiosError,type AxiosResponse } from "axios";
 
 export default class ArticleAPI{
     // Создание поста
-    static async create(data:createArticleDto):Promise<ApiResponse<any>>{
+    static async create(data:createArticleForm):Promise<ApiResponse<any>>{
         try {
             const response = await apiClient.post('/article',data);
             return response;

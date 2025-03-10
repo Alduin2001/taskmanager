@@ -3,6 +3,12 @@ export interface createArticleDto{
     body:string
 }
 
+export interface createArticleForm extends FormData{
+    image:File
+    header:string
+    body:string
+}
+
 export interface ArticleItem{
     id:number
     header:string

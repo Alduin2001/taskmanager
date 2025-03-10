@@ -1,5 +1,5 @@
 import ArticleAPI from "$lib/api/ArticleAPI";
-import type { ArticleItem, createArticleDto } from "$lib/interfaces/article";
+import type { ArticleItem, createArticleDto, createArticleForm } from "$lib/interfaces/article";
 import { writable } from "svelte/store";
 
 // Создание стейтов
@@ -7,7 +7,7 @@ export const articles = writable<ArticleItem[]>([]);
 
 
 // Создать пост
-export async function createArticle(data:createArticleDto):Promise<any>{
+export async function createArticle(data:createArticleForm):Promise<any>{
     const response = await ArticleAPI.create(data);
     console.log(response);
     return response;
