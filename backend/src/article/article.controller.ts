@@ -28,7 +28,7 @@ export class ArticleController {
   }
 
   // Получение всех постов
-  @Get()
+  @Get('all')
   findAll() {
     return this.articleService.findAll();
   }
