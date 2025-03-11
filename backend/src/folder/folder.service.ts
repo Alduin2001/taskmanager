@@ -8,6 +8,7 @@ export class FolderService {
   constructor(
     private prisma:PrismaService
   ){}
+  // Создание папки
   async create(createFolderDto: CreateFolderDto,user_id:number) {
     try {
       const {name} = createFolderDto;
@@ -23,7 +24,7 @@ export class FolderService {
       throw new BadRequestException(error.message);
     }
   }
-
+  // Получение моих папок
   async findMyAll(user_id:number) {
     try {
       const folders = await this.prisma.folder.findMany({
@@ -38,15 +39,42 @@ export class FolderService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} folder`;
+  // Получение одной папки по айди
+  async findOne(id: number,user_id:number) {
+    try {
+      const folder = await this.prisma.folder.findFirst({where:{id}});
+      if(!folder){
+        throw new BadRequestException('Не удалось найти папку');
+      }
+      return {folder};
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
-
-  update(id: number, updateFolderDto: UpdateFolderDto) {
-    return `This action updates a #${id} folder`;
+  // Обновление одной папки по айди
+  async update(id: number, updateFolderDto: UpdateFolderDto,user_id:number) {
+    try {
+      const folder = await this.prisma.folder.update({where:{id,ownerId:user_id},data:{
+        ...updateFolderDto
+      }});
+      if(!folder){
+        throw new BadRequestException('Не удалось обновить');
+      }
+      return HttpStatus.OK;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} folder`;
+  // Удаление одной папки по айди
+  async remove(id: number,user_id:number) {
+    try {
+      const folder = await this.prisma.folder.delete({where:{id,ownerId:user_id}});
+      if(!folder){
+        throw new BadRequestException('Не удалось удалить');
+      }
+      return HttpStatus.OK;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }
