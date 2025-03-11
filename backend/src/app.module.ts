@@ -11,6 +11,8 @@ import { JwtStrategy } from './config/jwt.strategy';
 import { ArticleModule } from './article/article.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CloudModule } from './cloud/cloud.module';
+import { FolderModule } from './folder/folder.module';
 
 console.log('Uploads dir',join(__dirname,'../uploads/'))
 
@@ -41,7 +43,9 @@ console.log('Uploads dir',join(__dirname,'../uploads/'))
     UserModule,
     AuthModule,
     TaskModule,
-    ArticleModule
+    ArticleModule,
+    CloudModule,
+    FolderModule
   ],
   controllers: [],
   providers: [PrismaService,JwtService,JwtStrategy],

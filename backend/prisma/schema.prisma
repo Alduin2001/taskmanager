@@ -31,6 +31,8 @@ model User{
   role  Role  @relation(fields: [roleId],references: [id],onDelete: Cascade)
   task  Task[]
   articles  Article[]
+  folders Folder[]
+  files File[]
 }
 
 model Task{
@@ -55,4 +57,24 @@ model Article{
   authorId  Int
   // Связь
   author  User  @relation(fields: [authorId],references: [id],onDelete: Cascade)
+}
+
+model Folder{
+  id  Int @id @default(autoincrement())
+  name  String
+  ownerId Int
+  // Связи
+  owner User  @relation(fields: [ownerId],references: [id],onDelete: Cascade)
+  files File[]
+}
+
+model File{
+  id  Int @id @default(autoincrement())
+  fileName  String
+  fileType  String
+  folderId  Int
+  ownerId Int
+  // Связи
+  folder Folder @relation(fields: [folderId],references: [id],onDelete: Cascade)
+  owner User  @relation(fields: [ownerId],references: [id],onDelete: Cascade)
 }
