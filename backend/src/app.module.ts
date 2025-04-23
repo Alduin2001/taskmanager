@@ -9,10 +9,20 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './config/jwt.strategy';
 import { ArticleModule } from './article/article.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { FolderModule } from './folder/folder.module';
+import { FilesModule } from './files/files.module';
+
+console.log('Uploads dir',join(__dirname,'../uploads/'))
 
 @Global()
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath:join(__dirname,'../uploads'),
+      serveRoot:'/uploads'
+    }),
     ConfigModule.forRoot({
       envFilePath:'.env',
       isGlobal:true
@@ -33,7 +43,9 @@ import { ArticleModule } from './article/article.module';
     UserModule,
     AuthModule,
     TaskModule,
-    ArticleModule
+    ArticleModule,
+    FolderModule,
+    FilesModule
   ],
   controllers: [],
   providers: [PrismaService,JwtService,JwtStrategy],

@@ -17,18 +17,19 @@ export class ArticleController {
     storage:diskStorage({
       destination:'./uploads/posts',
       filename(req, file, callback) {
-        const filename = `${Date.now()}-${req.file?.originalname}`;
+        const filename = `${Date.now()}-${file.originalname}`;
         callback(null,filename);
       },
     })
   }))
   @Post()
   create(@Body() createArticleDto: CreateArticleDto,@Req() req:UserRequest,@UploadedFile() file:Express.Multer.File) {
+    console.log(file);
     return this.articleService.create(createArticleDto,req.user.id,file.filename);
   }
 
   // Получение всех постов
-  @Get()
+  @Get('all')
   findAll() {
     return this.articleService.findAll();
   }

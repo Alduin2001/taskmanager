@@ -28,6 +28,7 @@ const logout = async ()=>{
                 <DropdownMenu end>
                     <DropdownItem href="/">Главная</DropdownItem>
                     <DropdownItem href="/about">О нас</DropdownItem>
+                    <DropdownItem href="/articles">Статьи</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
             {#if !$isAuth}
@@ -45,6 +46,7 @@ const logout = async ()=>{
                     <DropdownItem href="/profile">Профиль</DropdownItem>
                     <DropdownItem href="/profile/createtask">Создать задачу</DropdownItem>
                     <DropdownItem href="/profile/tasks">Список моих задач</DropdownItem>
+                    <DropdownItem href="/profile/createarticle">Создать статью</DropdownItem>
                     <DropdownItem on:click={logout}>Выйти</DropdownItem>
                 </DropdownMenu>
             </Dropdown>

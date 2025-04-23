@@ -13,7 +13,9 @@ export const role = writable<number>(0);
 export async function createUser(data: createUserDto) {
     const response = await UserAPI.create(data);
     console.log(response);
-    addNotification({message:"Пользователь создан",variant:Variants.success});
+    if(response.status>=200 && response<300){
+        addNotification({message:"Пользователь создан",variant:Variants.success});        
+    }
     return response;
 }
 
